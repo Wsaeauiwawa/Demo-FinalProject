@@ -47,8 +47,8 @@ export default class App extends Component<Props> {
         var labelsFile = '';
         break;
       default:
-        var modelFile = 'models/mobilenet_v1_1.0_224.tflite';
-        var labelsFile = 'models/mobilenet_v1_1.0_224.txt';
+        var modelFile = 'models/model.tflite';
+        var labelsFile = 'models/labels.txt';
     }
     tflite.loadModel({
       model: modelFile,
