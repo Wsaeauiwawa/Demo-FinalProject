@@ -47,8 +47,8 @@ export default class App extends Component<Props> {
         var labelsFile = '';
         break;
       default:
-        var modelFile = 'models/model.tflite';
-        var labelsFile = 'models/labels.txt';
+        var modelFile = 'models/model_fp32.tflite';
+        var labelsFile = 'models/model.txt';
     }
     tflite.loadModel({
       model: modelFile,
@@ -216,7 +216,7 @@ export default class App extends Component<Props> {
       default:
         return recognitions.map((res, id) => {
           return (
-            <Text key={id} style={{ color: 'black' }}>
+            <Text key={id} style={{ color: '#fff' }}>
               {res["label"] + "-" + (res["confidence"] * 100).toFixed(0) + "%"}
             </Text>
           )
