@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Image, Text, View, TouchableOpacity, Button } from 'react-native';
+import { Platform, StyleSheet, Image, Text, View, TouchableOpacity, Button, Flatlist, ScrollView, SafeAreaView } from 'react-native';
 import Tflite from 'tflite-react-native';
 import ImagePicker from 'react-native-image-picker';
 
@@ -28,10 +28,6 @@ export default class HomeScreen extends Component<Props> {
     if (model == mobile) {
         var modelFile = 'models/model_fp32.tflite';
         var labelsFile = 'models/model.txt';
-    }
-    else {
-      var modelFile = 'models/model_fp32.tflite';
-      var labelsFile = 'models/model.txt';
     }
 
     tflite.loadModel({
@@ -64,12 +60,14 @@ export default class HomeScreen extends Component<Props> {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         var path = Platform.OS === 'ios' ? response.uri : 'file://' + response.path;
-        var w = response.width;
-        var h = response.height;
+        // var w = response.width;
+        // var h = response.height;
         this.setState({
           source: { uri: path },
-          imageHeight: h * width / w,
-          imageWidth: width
+          // imageHeight: h * width / w,
+          // imageWidth: width
+          imageHeight: 350,
+          imageWidth: 350
         });
         if (this.state.model) {
             tflite.runModelOnImage({
@@ -96,11 +94,11 @@ export default class HomeScreen extends Component<Props> {
     if (model == mobile) {
         return recognitions.map((res, id) => {
           // console.log(id)
-          console.log(res)
+          console.log(res.index)
           return (
-            <TouchableOpacity onPress={() => { this.props.navigation.navigate("Details") }} >
-            <Text key={id} style={{ color: '#fff' }}>
-              {res["label"] + "-" + (res["confidence"] * 100).toFixed(0) + "%"}
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate("Predict",{index:res.index}) }} >
+            <Text key={res["index"]} style={{ color: '#000' }}>
+              {res["index"] + res["label"] + "-" + (res["confidence"] * 100).toFixed(0) + "%"}
             </Text>
             </TouchableOpacity>
           )
@@ -111,7 +109,6 @@ export default class HomeScreen extends Component<Props> {
   render() {
    const { model, source, imageHeight, imageWidth } = this.state;
     var renderButton = (m) => {
-      //  console.log(m)
       return (
         <TouchableOpacity style={styles.button} onPress={this.onSelectModel.bind(this, m)}>
           <Text style={styles.buttonText}>{m}</Text>
@@ -120,8 +117,18 @@ export default class HomeScreen extends Component<Props> {
       );
     }
     return(
-      <View style={styles.container}>
-      {model ?
+      <SafeAreaView style={{flex:1}}>
+      <View style={{flex:1,flexDirection:'column',justifyContent:'flex-start',alignItems:'center'}}>
+      <ScrollView scrollEnable={true} showsVerticalScrollIndictor={true}>
+      {/* <TouchableOpacity style={styles.button} onPress={this.onSelectImage.bind(this)}>
+          <Text style={styles.buttonText}>Predict</Text>
+      </TouchableOpacity> */}
+      
+      {/* <Button
+        title="second"
+        onPress={() => this.props.navigation.navigate("Predict")}
+      /> */}
+      {model ?  
           <TouchableOpacity style={
             [styles.imageContainer, {
               height: imageHeight,
@@ -135,19 +142,34 @@ export default class HomeScreen extends Component<Props> {
                 }} resizeMode="contain" /> :
                 <Text style={styles.text}>Select Picture</Text>
             }
-            <View style={styles.boxes}>
+            {/* <View>
               {this.renderResults()}
-            </View>
+            </View> */}
           </TouchableOpacity>
-          
+
           :
+
           <View>
             {renderButton(mobile)}
           </View>
+      
+          
+          
           
         }
-        {/* <Button title="Back" onPress={() => { this.props.navigation.navigate("Details") }} /> */}
+        <View>
+            {this.renderResults()}
+        </View>
+        {/* <View>
+            {this.renderResults()}
+        </View>
+        <View>
+            {this.renderResults()}
+        </View> */}
+      </ScrollView>
       </View>
+      </SafeAreaView>
+      
     )
   }
 }
