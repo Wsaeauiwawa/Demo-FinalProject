@@ -209,7 +209,7 @@ export default class HomeScreen extends Component<Props> {
                   }}>
                   Leaf Herb
                 </Text>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.button}
                   onPress={() => this.props.navigation.navigate('Details')}>
                   <Icon
@@ -219,7 +219,7 @@ export default class HomeScreen extends Component<Props> {
                     style={{marginVertical: 10}}
                   />
                   <Text style={styles.buttonText}>Search</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {renderButton(mobile)}
               </View>
             )}
