@@ -21,8 +21,7 @@ export default class Tab1 extends Component {
  
   componentDidMount() {
     // console.log(this.state.index);
-    const url = `http://192.168.100.27:3000/herb/`+this.state.index;
-    // const url = 'http://172.20.10.4:3000/herb';
+    const url = `http://localhost:3000/herb/`+this.state.index;
     fetch(url)
       .then(response => response.json())
       .then(responseJson => {
