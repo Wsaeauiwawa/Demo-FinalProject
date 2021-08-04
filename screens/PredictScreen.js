@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
   View,
   Image,
-  Button
+  Button,
+  ScrollView,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class Tab1 extends Component {
   constructor(props) {
@@ -18,10 +20,10 @@ export default class Tab1 extends Component {
       index: props.route.params.index,
     };
   }
- 
+
   componentDidMount() {
     // console.log(this.state.index);
-    const url = `http://localhost:3000/herb/`+this.state.index;
+    const url = `http://192.168.100.27:3000/herb/` + this.state.index;
     fetch(url)
       .then(response => response.json())
       .then(responseJson => {
@@ -42,20 +44,54 @@ export default class Tab1 extends Component {
   }
 
   render() {
-    
     return (
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        scrollEnable={true}
+        showsVerticalScrollIndictor={true}>
+        <Icon
+          name="leaf-outline"
+          size={50}
+          color="#000"
+          style={{marginLeft: 175, marginTop: 15}}
+        />
+        <Text
+          style={{
+            fontSize: 25,
+            fontFamily: 'RobotoMono-VariableFont_wght',
+            color: '#000',
+            marginLeft: 160,
+            fontWeight: '500',
+          }}>
+          Result
+        </Text>
+
         <View style={styles.list}>
-          {/* <Image
-            style={{width: 80, height: 80, marginBottom: 3}}
-            source={{uri: item.image}}
-          /> */}
-          <Text style={styles.txtlist}>{this.state.herb.name}</Text>
-          <Text style={{color: '#fff'}}>ชื่อสามัญ: {this.state.herb.common_name}</Text>
+          <Image
+            style={{width: 200, height: 200, marginBottom: 3,borderRadius: 10,  borderColor: '#000', marginLeft: 80}}
+            source={{uri: this.state.herb.Pic}}
+          />
+          <Text style={styles.txtlist}>{this.state.herb.SPname}</Text>
+          <Text style={{color: '#696969'}}>{this.state.herb.Cname}</Text>
+          <Text style={{color: '#696969'}}>{this.state.herb.Sname}</Text>
+          <Text style={{color: '#696969'}}>{this.state.herb.Family}</Text>
+          <Text style={styles.txtlist}>ลักษณะ</Text>
+          <Text style={styles.txtlist}>ราก</Text>
+          <Text style={{color: '#696969'}}>{this.state.herb.Root}</Text>
+          <Text style={styles.txtlist}>ลำต้น</Text>
+          <Text style={{color: '#696969'}}>{this.state.herb.Stem}</Text>
+          <Text style={styles.txtlist}>ใบ</Text>
+          <Text style={{color: '#696969'}}>{this.state.herb.Leaf}</Text>
+          <Text style={styles.txtlist}>ดอก</Text>
+          <Text style={{color: '#696969'}}>{this.state.herb.Flower}</Text>
+          <Text style={styles.txtlist}>ผล</Text>
+          <Text style={{color: '#696969'}}>{this.state.herb.Fruit}</Text>
+          <Text style={styles.txtlist}>เมล็ด</Text>
+          <Text style={{color: '#000'}}>{this.state.herb.Seed}</Text>
         </View>
 
         {/* {renderHeader()} */}
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -87,7 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     margin: 15,
     paddingLeft: 30,
-    backgroundColor: '#fff',
+    backgroundColor: '#F8F8FF',
   },
 
   icon: {
@@ -103,14 +139,17 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     borderWidth: 1,
     padding: 10,
-    backgroundColor: '#00a352',
+    backgroundColor: '#fff',
+    marginTop: 10,
+    marginBottom:10
   },
 
   txtlist: {
     fontSize: 15,
     fontWeight: 'bold',
+    marginTop: 10,
     marginBottom: 5,
-    color: '#fff',
-    fontFamily: 'K2D-Light',
+    color: '#000',
+    fontFamily: 'RobotoMono-VariableFont_wght',
   },
 });

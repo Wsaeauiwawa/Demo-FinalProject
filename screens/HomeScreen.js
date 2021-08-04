@@ -118,7 +118,7 @@ export default class HomeScreen extends Component<Props> {
             onPress={() => {
               this.props.navigation.navigate('Predict', {index: res.index});
             }}>
-            <Text key={res['index']} style={{color: '#000', paddingLeft: 10, marginTop: 15}}>
+            <Text key={res['index']} style={{color: '#000', paddingLeft: 10, marginTop: 15, fontSize:15, fontFamily: 'RobotoMono-VariableFont_wght'}}>
               {res['label'] + ' -' + (res['confidence'] * 100).toFixed(0) + '%'}
             </Text>
             <Icon
@@ -151,7 +151,7 @@ export default class HomeScreen extends Component<Props> {
       );
     };
     return (
-      <View style={{flex: 1, backgroundColor: '#eff2f5'}}>
+      <View style={{flex: 1, backgroundColor: '#eff2f5', marginBottom:100}}>
         <View style={{height: '35%'}}>
           <Image
             source={require('../assets/background.png')}
@@ -200,26 +200,24 @@ export default class HomeScreen extends Component<Props> {
               </TouchableOpacity>
             ) : (
               <View>
+              <Icon
+                    name="leaf"
+                    size={150}
+                    color="#009900"
+                    style={{marginTop: 45,marginLeft: 30}}
+                  />
                 <Text
                   style={{
-                    paddingLeft: 10,
+                    marginLeft: 20,
                     color: '#000',
                     fontSize: 30,
-                    marginTop: 30,
+                    fontFamily: 'RobotoMono-VariableFont_wght',
+                    fontWeight: '500'
+                    // marginTop: 30,
                   }}>
                   Leaf Herb
                 </Text>
-                {/* <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => this.props.navigation.navigate('Details')}>
-                  <Icon
-                    name="search"
-                    size={50}
-                    color="#fff"
-                    style={{marginVertical: 10}}
-                  />
-                  <Text style={styles.buttonText}>Search</Text>
-                </TouchableOpacity> */}
+                
                 {renderButton(mobile)}
               </View>
             )}
@@ -240,13 +238,16 @@ const styles = StyleSheet.create({
     // marginLeft:30
   },
   text: {
-    color: blue,
+    color: '#000',
+    fontSize:20,
+    fontFamily:'RobotoMono-VariableFont_wght',
+    fontWeight: '300'
   },
   button: {
-    backgroundColor: blue,
+    backgroundColor: '#191970',
     borderRadius: 10,
     height: 100,
-    width: 150,
+    width: 200,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
@@ -255,7 +256,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 15,
+    fontSize: 20,
+    fontWeight: '200',
+    fontFamily:'RobotoMono-VariableFont_wght'
   },
   box: {
     position: 'absolute',
