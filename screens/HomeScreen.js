@@ -14,6 +14,8 @@ import Tflite from 'tflite-react-native';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+// import ImagePicker from 'react-native-image-crop-picker';
+
 let tflite = new Tflite();
 
 const height = 350;
@@ -79,6 +81,7 @@ export default class HomeScreen extends Component<Props> {
           imageHeight: 350,
           imageWidth: 350,
         });
+
         if (this.state.model) {
           tflite.runModelOnImage(
             {
@@ -103,7 +106,8 @@ export default class HomeScreen extends Component<Props> {
     if (model == mobile) {
       return recognitions.map((res, id) => {
         // console.log(id)
-        console.log(res.index);
+        console.log(res);
+        // console.log(res.index);
         return (
           <TouchableOpacity
             style={{
@@ -118,15 +122,27 @@ export default class HomeScreen extends Component<Props> {
             onPress={() => {
               this.props.navigation.navigate('Predict', {index: res.index});
             }}>
-            <Text key={res['index']} style={{color: '#000', paddingLeft: 10, marginTop: 15, fontSize:15, fontFamily: 'RobotoMono-VariableFont_wght'}}>
-              {res['label'] + ' -' + (res['confidence'] * 100).toFixed(0) + '%'}
-            </Text>
-            <Icon
-              name="arrow-right"
-              size={20}
-              color="#D3D3D3"
-              style={{paddingLeft: 220}}
-            />
+            {/* key={res['index']} */}
+              <Text
+                key={res['index']}
+                style={{
+                  color: '#000',
+                  paddingLeft: 10,
+                  marginTop: 15,
+                  fontSize: 15,
+                  fontFamily: 'RobotoMono-VariableFont_wght',
+                }}>
+                {res['label'] +
+                  ' -' +
+                  (res['confidence'] * 100).toFixed(0) +
+                  '%'}
+              </Text>
+              <Icon
+                name="arrow-right"
+                size={20}
+                color="#D3D3D3"
+                style={{paddingLeft: 220}}
+              />
           </TouchableOpacity>
         );
       });
@@ -151,7 +167,7 @@ export default class HomeScreen extends Component<Props> {
       );
     };
     return (
-      <View style={{flex: 1, backgroundColor: '#eff2f5', marginBottom:100}}>
+      <View style={{flex: 1, backgroundColor: '#eff2f5', marginBottom: 100}}>
         <View style={{height: '35%'}}>
           <Image
             source={require('../assets/background.png')}
@@ -200,25 +216,26 @@ export default class HomeScreen extends Component<Props> {
               </TouchableOpacity>
             ) : (
               <View>
-              <Icon
-                    name="leaf"
-                    size={150}
-                    color="#009900"
-                    style={{marginTop: 45,marginLeft: 30}}
-                  />
+                <Icon
+                  name="leaf"
+                  size={150}
+                  color="#009900"
+                  style={{marginTop: 45, marginLeft: 30}}
+                />
                 <Text
                   style={{
                     marginLeft: 20,
                     color: '#000',
                     fontSize: 30,
                     fontFamily: 'RobotoMono-VariableFont_wght',
-                    fontWeight: '500'
+                    fontWeight: '500',
                     // marginTop: 30,
                   }}>
                   Leaf Herb
                 </Text>
-                
+
                 {renderButton(mobile)}
+                {/* {renderButton(mobile)} */}
               </View>
             )}
             <View>{this.renderResults()}</View>
@@ -239,9 +256,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#000',
-    fontSize:20,
-    fontFamily:'RobotoMono-VariableFont_wght',
-    fontWeight: '300'
+    fontSize: 20,
+    fontFamily: 'RobotoMono-VariableFont_wght',
+    fontWeight: '300',
   },
   button: {
     backgroundColor: '#191970',
@@ -258,7 +275,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: '200',
-    fontFamily:'RobotoMono-VariableFont_wght'
+    fontFamily: 'RobotoMono-VariableFont_wght',
   },
   box: {
     position: 'absolute',

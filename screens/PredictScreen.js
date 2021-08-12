@@ -9,6 +9,7 @@ import {
   Image,
   Button,
   ScrollView,
+  Linking,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -68,7 +69,14 @@ export default class Tab1 extends Component {
 
         <View style={styles.list}>
           <Image
-            style={{width: 200, height: 200, marginBottom: 3,borderRadius: 10,  borderColor: '#000', marginLeft: 80}}
+            style={{
+              width: 200,
+              height: 200,
+              marginBottom: 3,
+              borderRadius: 10,
+              borderColor: '#000',
+              marginLeft: 80,
+            }}
             source={{uri: this.state.herb.Pic}}
           />
           <Text style={styles.txtlist}>{this.state.herb.SPname}</Text>
@@ -88,6 +96,11 @@ export default class Tab1 extends Component {
           <Text style={{color: '#696969'}}>{this.state.herb.Fruit}</Text>
           <Text style={styles.txtlist}>เมล็ด</Text>
           <Text style={{color: '#000'}}>{this.state.herb.Seed}</Text>
+          {/* <Text
+            style={{color: 'blue'}}
+            onPress={() => Linking.openURL(this.state.herb.Pic)}>
+            อ่านเพิ่มเติม
+          </Text> */}
         </View>
 
         {/* {renderHeader()} */}
@@ -141,7 +154,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
     marginTop: 10,
-    marginBottom:10
+    marginBottom: 10,
   },
 
   txtlist: {
