@@ -1,25 +1,12 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { WebView } from 'react-native-webview';
 
-const SearchScreen =({navigation}) => {
-    return (
-        <View style={styles.container}>
-            <Text>Search Screen</Text>
-            <Button
-                title="Click Here"
-                onPress={() => alert('Button Clicked!')}
-            />
-        </View>
-    );
-};
-
-export default SearchScreen;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#8fcbbc'
-    },
-});
+// ...
+export default class SearchScreen extends Component {
+  render() {
+    return(
+        <WebView source={{ uri: 'https://www.google.com/' }} />
+    ); 
+  }
+}

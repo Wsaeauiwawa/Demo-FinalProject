@@ -32,14 +32,37 @@ export default class HomeScreen extends Component<Props> {
       imageHeight: height,
       imageWidth: width,
       recognitions: [],
+      // herb: [],
     };
   }
+
+  // componentDidMount() {
+  //   // console.log(this.state.index);
+  //   const url = `http://192.168.100.27:3000/herb/` + this.state.index;
+  //   fetch(url)
+  //     .then(response => response.json())
+  //     .then(responseJson => {
+  //       // console.log(responseJson);
+  //       this.setState(
+  //         {
+  //           herb: responseJson.detail,
+  //         },
+  //         // function () {
+  //         //   console.log(this.state.herb);
+  //         // },
+  //       );
+  //       // console.log(responseJson.detail)
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }
 
   onSelectModel(model) {
     this.setState({model});
     if (model == mobile) {
-      var modelFile = 'models/model_fp32.tflite';
-      var labelsFile = 'models/model.txt';
+      var modelFile = 'models/model_100_class.tflite';
+      var labelsFile = 'models/model_100_class.txt';
     }
 
     tflite.loadModel(
@@ -108,6 +131,8 @@ export default class HomeScreen extends Component<Props> {
         // console.log(id)
         console.log(res);
         // console.log(res.index);
+        // if(res.index == this.state.herb.HID)
+        // console.log('eee');
         return (
           <TouchableOpacity
             style={{
@@ -231,7 +256,7 @@ export default class HomeScreen extends Component<Props> {
                     fontWeight: '500',
                     // marginTop: 30,
                   }}>
-                  Leaf Herb
+                  Ton Herb
                 </Text>
 
                 {renderButton(mobile)}
