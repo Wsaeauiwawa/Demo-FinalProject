@@ -32,37 +32,15 @@ export default class HomeScreen extends Component<Props> {
       imageHeight: height,
       imageWidth: width,
       recognitions: [],
-      // herb: [],
+      herb: '',
     };
   }
-
-  // componentDidMount() {
-  //   // console.log(this.state.index);
-  //   const url = `http://192.168.100.27:3000/herb/` + this.state.index;
-  //   fetch(url)
-  //     .then(response => response.json())
-  //     .then(responseJson => {
-  //       // console.log(responseJson);
-  //       this.setState(
-  //         {
-  //           herb: responseJson.detail,
-  //         },
-  //         // function () {
-  //         //   console.log(this.state.herb);
-  //         // },
-  //       );
-  //       // console.log(responseJson.detail)
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }
 
   onSelectModel(model) {
     this.setState({model});
     if (model == mobile) {
-      var modelFile = 'models/model_100_class.tflite';
-      var labelsFile = 'models/model_100_class.txt';
+      var modelFile = 'models/model_fp32.tflite';
+      var labelsFile = 'models/model.txt';
     }
 
     tflite.loadModel(
@@ -126,19 +104,29 @@ export default class HomeScreen extends Component<Props> {
 
   renderResults() {
     const {model, recognitions, imageHeight, imageWidth} = this.state;
+
     if (model == mobile) {
       return recognitions.map((res, id) => {
-        // console.log(id)
-        console.log(res);
-        // console.log(res.index);
-        // if(res.index == this.state.herb.HID)
-        // console.log('eee');
+        var data;
+        const url = `http://192.168.100.27:3000/herb/` + res.index;
+        console.log(res.index);
+        console.log(url);
+        fetch(url)
+          .then(response => response.json())
+          .then(responseJson => {
+            console.log(responseJson.detail.SPname);
+            console.log(responseJson.detail.Pic);
+            data = responseJson.detail;
+          });
         return (
           <TouchableOpacity
+            key={id}
             style={{
-              backgroundColor: blue,
+              backgroundColor: '#fff',
+              borderColor: '000',
+              borderWidth: 2,
               borderRadius: 10,
-              height: 60,
+              height: 70,
               width: 250,
               marginTop: 10,
               marginLeft: 50,
@@ -146,28 +134,30 @@ export default class HomeScreen extends Component<Props> {
             }}
             onPress={() => {
               this.props.navigation.navigate('Predict', {index: res.index});
+              // console.log(data.SPname);
             }}>
             {/* key={res['index']} */}
-              <Text
-                key={res['index']}
-                style={{
-                  color: '#000',
-                  paddingLeft: 10,
-                  marginTop: 15,
-                  fontSize: 15,
-                  fontFamily: 'RobotoMono-VariableFont_wght',
-                }}>
-                {res['label'] +
-                  ' -' +
-                  (res['confidence'] * 100).toFixed(0) +
-                  '%'}
-              </Text>
-              <Icon
-                name="arrow-right"
-                size={20}
-                color="#D3D3D3"
-                style={{paddingLeft: 220}}
-              />
+            <Text
+              style={{
+                color: '#006633',
+                paddingLeft: 10,
+                marginTop: 15,
+                fontSize: 15,
+                fontFamily: 'RobotoMono-VariableFont_wght',
+                fontWeight: 'bold'
+              }}
+              onPress={() => {
+                console.log(data.SPname);
+              }}>
+              {res['label'] + ' -' + (res['confidence'] * 100).toFixed(0) + '%'}
+            </Text>
+
+            <Icon
+              name="arrow-right"
+              size={20}
+              color="#000"
+              style={{paddingLeft: 220}}
+            />
           </TouchableOpacity>
         );
       });

@@ -34,7 +34,7 @@ export default class Tab1 extends Component {
             herb: responseJson.detail,
           },
           function () {
-            console.log(this.state.herb);
+            // console.log(this.state.herb);
           },
         );
         // console.log(responseJson.detail)
