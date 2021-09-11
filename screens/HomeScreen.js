@@ -9,12 +9,12 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
+  AsyncStorage,
 } from 'react-native';
 import Tflite from 'tflite-react-native';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-// import ImagePicker from 'react-native-image-crop-picker';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 let tflite = new Tflite();
 
@@ -32,15 +32,15 @@ export default class HomeScreen extends Component<Props> {
       imageHeight: height,
       imageWidth: width,
       recognitions: [],
-      herb: '',
+      herb: [],
     };
   }
 
   onSelectModel(model) {
     this.setState({model});
     if (model == mobile) {
-      var modelFile = 'models/model_fp32.tflite';
-      var labelsFile = 'models/model.txt';
+      var modelFile = 'models/model_100_class4.tflite';
+      var labelsFile = 'models/model_100_class4.txt';
     }
 
     tflite.loadModel(
@@ -73,12 +73,8 @@ export default class HomeScreen extends Component<Props> {
       } else {
         var path =
           Platform.OS === 'ios' ? response.uri : 'file://' + response.path;
-        // var w = response.width;
-        // var h = response.height;
         this.setState({
           source: {uri: path},
-          // imageHeight: h * width / w,
-          // imageWidth: width
           imageHeight: 350,
           imageWidth: 350,
         });
@@ -104,60 +100,71 @@ export default class HomeScreen extends Component<Props> {
 
   renderResults() {
     const {model, recognitions, imageHeight, imageWidth} = this.state;
-
     if (model == mobile) {
       return recognitions.map((res, id) => {
-        var data;
-        const url = `http://192.168.100.27:3000/herb/` + res.index;
-        console.log(res.index);
-        console.log(url);
-        fetch(url)
-          .then(response => response.json())
-          .then(responseJson => {
-            console.log(responseJson.detail.SPname);
-            console.log(responseJson.detail.Pic);
-            data = responseJson.detail;
-          });
+         console.log(res);
+        // var data;
+        // const url = `http://192.168.100.27:3000/herb/` + res.index;
+        // console.log(res.index);
+        // console.log(url);
+        // fetch(url)
+        //   .then(response => response.json())
+        //   .then(responseJson => {
+        //     console.log(responseJson.detail.SPname);
+        //     console.log(responseJson.detail.Pic);
+        //     data = responseJson.detail;
+        //   });
+
         return (
           <TouchableOpacity
             key={id}
-            style={{
-              backgroundColor: '#fff',
-              borderColor: '000',
-              borderWidth: 2,
-              borderRadius: 10,
-              height: 70,
-              width: 250,
-              marginTop: 10,
-              marginLeft: 50,
-              marginBottom: 10,
-            }}
+            style={styles.result}
             onPress={() => {
               this.props.navigation.navigate('Predict', {index: res.index});
               // console.log(data.SPname);
             }}>
-            {/* key={res['index']} */}
+            {/* <Image
+            style={{
+              width: 200,
+              height: 200,
+              marginBottom: 3,
+              borderRadius: 10,
+              borderColor: '#000',
+              marginLeft: 80,
+            }}
+            source={{uri: data.Pic}}
+          /> */}
             <Text
               style={{
                 color: '#006633',
                 paddingLeft: 10,
-                marginTop: 15,
+                marginTop: 5,
                 fontSize: 15,
                 fontFamily: 'RobotoMono-VariableFont_wght',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
               }}
               onPress={() => {
-                console.log(data.SPname);
+                // console.log(data.SPname);
               }}>
+              {/* {data.SPname} */}
               {res['label'] + ' -' + (res['confidence'] * 100).toFixed(0) + '%'}
             </Text>
 
-            <Icon
-              name="arrow-right"
+            <MaterialCommunityIcons
+              name="eye"
               size={20}
               color="#000"
-              style={{paddingLeft: 220}}
+              style={{paddingLeft: 210}}
             />
+            <Text
+              style={{
+                paddingLeft: 179,
+                color: '#006633',
+                fontSize: 13,
+                fontFamily: 'RobotoMono-VariableFont_wght'
+              }}>
+              See Detail
+            </Text>
           </TouchableOpacity>
         );
       });
@@ -226,7 +233,15 @@ export default class HomeScreen extends Component<Props> {
                     resizeMode="contain"
                   />
                 ) : (
-                  <Text style={styles.text}>Select Picture</Text>
+                  <View>
+                    <Text style={styles.text}>Select Picture</Text>
+                    <Icon
+                      name="image"
+                      size={80}
+                      color="#D3D3D3"
+                      style={{paddingLeft: 45, marginTop: 105}}
+                    />
+                  </View>
                 )}
               </TouchableOpacity>
             ) : (
@@ -263,7 +278,7 @@ export default class HomeScreen extends Component<Props> {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    borderColor: blue,
+    borderColor: '#009900',
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 10,
@@ -303,5 +318,16 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     top: 0,
+  },
+  result: {
+    backgroundColor: '#fff',
+    borderColor: '#000',
+    borderWidth: 2,
+    borderRadius: 10,
+    height: 70,
+    width: 270,
+    marginTop: 10,
+    marginLeft: 40,
+    marginBottom: 10,
   },
 });

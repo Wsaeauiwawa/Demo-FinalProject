@@ -64,7 +64,7 @@ export default class Tab1 extends Component {
             marginLeft: 160,
             fontWeight: '500',
           }}>
-          Result
+          Detail
         </Text>
 
         <View style={styles.list}>
@@ -79,28 +79,55 @@ export default class Tab1 extends Component {
             }}
             source={{uri: this.state.herb.Pic}}
           />
-          <Text style={styles.txtlist}>{this.state.herb.SPname}</Text>
-          <Text style={{color: '#696969'}}>{this.state.herb.Cname}</Text>
-          <Text style={{color: '#696969'}}>{this.state.herb.Sname}</Text>
-          <Text style={{color: '#696969'}}>{this.state.herb.Family}</Text>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              marginTop: 10,
+              marginBottom: 5,
+              color: '#006400',
+              fontFamily: 'RobotoMono-VariableFont_wght',
+            }}>
+            {this.state.herb.SPname} ({this.state.herb.Cname})
+          </Text>
+          <Text style={{color: '#000'}}>{this.state.herb.Sname}</Text>
+          <Text style={{color: '#000', textTransform: 'uppercase'}}>
+            {this.state.herb.Family}
+          </Text>
           <Text style={styles.txtlist}>ลักษณะ</Text>
           <Text style={styles.txtlist}>ราก</Text>
-          <Text style={{color: '#696969'}}>{this.state.herb.Root}</Text>
+          <Text style={{color: '#000'}}>  {this.state.herb.Root}</Text>
           <Text style={styles.txtlist}>ลำต้น</Text>
-          <Text style={{color: '#696969'}}>{this.state.herb.Stem}</Text>
+          <Text style={{color: '#000'}}>  {this.state.herb.Stem}</Text>
           <Text style={styles.txtlist}>ใบ</Text>
-          <Text style={{color: '#696969'}}>{this.state.herb.Leaf}</Text>
+          <Text style={{color: '#000'}}>  {this.state.herb.Leaf}</Text>
           <Text style={styles.txtlist}>ดอก</Text>
-          <Text style={{color: '#696969'}}>{this.state.herb.Flower}</Text>
+          <Text style={{color: '#000'}}>  {this.state.herb.Flower}</Text>
           <Text style={styles.txtlist}>ผล</Text>
-          <Text style={{color: '#696969'}}>{this.state.herb.Fruit}</Text>
+          <Text style={{color: '#000'}}>  {this.state.herb.Fruit}</Text>
           <Text style={styles.txtlist}>เมล็ด</Text>
-          <Text style={{color: '#000'}}>{this.state.herb.Seed}</Text>
-          {/* <Text
-            style={{color: 'blue'}}
-            onPress={() => Linking.openURL(this.state.herb.Pic)}>
-            อ่านเพิ่มเติม
-          </Text> */}
+          <Text style={{color: '#000'}}>  {this.state.herb.Seed}</Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#00a352',
+              borderRadius: 10,
+              height: 50,
+              width: 200,
+              marginTop:5,
+              marginLeft:85
+            }} onPress={() => Linking.openURL(this.state.herb.Pic)}>
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 18,
+                fontFamily: 'RobotoMono-VariableFont_wght',
+                fontWeight: 'bold',
+                marginLeft:55,
+                marginTop:12,
+              }}>
+              อ่านเพิ่มเติม
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* {renderHeader()} */}
@@ -162,7 +189,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 5,
-    color: '#000',
+    color: '#006400',
     fontFamily: 'RobotoMono-VariableFont_wght',
+    textDecorationLine: 'underline'
+  },
+  readmore: {
+    backgroundColor: '#fff',
+    borderColor: '#000',
+    borderWidth: 2,
+    borderRadius: 10,
+    height: 70,
+    width: 250,
+    marginTop: 10,
+    marginLeft: 50,
+    marginBottom: 10,
   },
 });
