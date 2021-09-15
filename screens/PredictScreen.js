@@ -24,7 +24,7 @@ export default class Tab1 extends Component {
 
   componentDidMount() {
     // console.log(this.state.index);
-    const url = `http://192.168.100.27:3000/herb/` + this.state.index;
+    const url = `http://192.168.100.27:3002/herb/` + this.state.index;
     fetch(url)
       .then(response => response.json())
       .then(responseJson => {
@@ -107,6 +107,8 @@ export default class Tab1 extends Component {
           <Text style={{color: '#000'}}>  {this.state.herb.Fruit}</Text>
           <Text style={styles.txtlist}>เมล็ด</Text>
           <Text style={{color: '#000'}}>  {this.state.herb.Seed}</Text>
+          <Text style={styles.txtlist}>สรรพคุณ</Text>
+          <Text style={{color: '#000'}}>  {this.state.herb.Symptom}</Text>
           <TouchableOpacity
             style={{
               backgroundColor: '#00a352',

@@ -9,7 +9,6 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
-  AsyncStorage,
 } from 'react-native';
 import Tflite from 'tflite-react-native';
 import ImagePicker from 'react-native-image-picker';
@@ -32,7 +31,7 @@ export default class HomeScreen extends Component<Props> {
       imageHeight: height,
       imageWidth: width,
       recognitions: [],
-      herb: [],
+      // herb: [],
     };
   }
 
@@ -102,7 +101,7 @@ export default class HomeScreen extends Component<Props> {
     const {model, recognitions, imageHeight, imageWidth} = this.state;
     if (model == mobile) {
       return recognitions.map((res, id) => {
-         console.log(res);
+        console.log(res);
         // var data;
         // const url = `http://192.168.100.27:3000/herb/` + res.index;
         // console.log(res.index);
@@ -113,6 +112,9 @@ export default class HomeScreen extends Component<Props> {
         //     console.log(responseJson.detail.SPname);
         //     console.log(responseJson.detail.Pic);
         //     data = responseJson.detail;
+        //   })
+        //   .catch(error => {
+        //     console.log(error);
         //   });
 
         return (
@@ -146,7 +148,7 @@ export default class HomeScreen extends Component<Props> {
               onPress={() => {
                 // console.log(data.SPname);
               }}>
-              {/* {data.SPname} */}
+              {/* {this.state.herb.SPname} */}
               {res['label'] + ' -' + (res['confidence'] * 100).toFixed(0) + '%'}
             </Text>
 
@@ -161,7 +163,7 @@ export default class HomeScreen extends Component<Props> {
                 paddingLeft: 179,
                 color: '#006633',
                 fontSize: 13,
-                fontFamily: 'RobotoMono-VariableFont_wght'
+                fontFamily: 'RobotoMono-VariableFont_wght',
               }}>
               See Detail
             </Text>
